@@ -18,9 +18,9 @@ phases:
       - DT=`date +%Y-%m-%d-%S`
       - echo $DT
       - echo $DBucketenv
-      - printf '{"epoctime":"%s"},' $DT > ../build.json
-      - printf '{"DBucket":"%s"}' $DBucketenv >> ../build.json
-      - cat ../build.json
+      - printf '{"epoctime":"%s"},' $DT > build.json
+      - printf '{"DBucket":"%s"}' $DBucketenv >> build.json
+      - cat build.json
       - ls -ltr
       - aws s3 cp --recursive ./nested s3://$DBucketenv/$DT/
     finally:
