@@ -1,0 +1,30 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - echo Entered the install phase...
+    finally:
+      - echo This always runs even if the update or install command fails 
+  pre_build:
+    commands:
+      - echo Entering pre build stage
+      - pwd
+      - ls -ltr
+      - df -h
+      - pip install awscli --upgrade --user
+  build:
+    commands:
+      - echo Entered the build phase...
+      - DT=`date +%Y-%m-%d-%S`
+      - echo $DT
+      - printf '{"epoctime":"%s"}' $DT > ../build.json
+      - ls -ltr
+      - aws s3 cp --recursive ./nested s3://${}/$(DT)/
+    finally:
+      - echo This always runs even if build command fails
+  post_build:
+    commands:
+      - echo Entered the post_build phase...
+      - echo Build completed on `date`
+artifacts:
+  files: build.json

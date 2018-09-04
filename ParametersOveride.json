@@ -1,0 +1,3 @@
+{
+  "BucketDPrefix" : { "Fn::GetParam" : ["OutputArtifact", "build.json", "epoctime"] }
+  }

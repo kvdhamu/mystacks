@@ -15,12 +15,11 @@
 
 		"S3Bucket": {
 			"Description": " Name of your S3 bucket",
-			"Default": "damouseast1",
+			"Default": "",
 			"Type": "String"
 		},
-		"S3Prefix": {
-			"Description": " Name of your S3 bucket",
-			"Default": "nestedstacks",
+		"BucketDPrefix": {
+			"Description": " Name of your S3 bucket prefix",
 			"Type": "String"
 		}
 
@@ -31,7 +30,7 @@
 		"VPCStack": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": { "Fn::Sub" : "https://s3.${AWS::Region}.amazonaws.com/${S3Bucket}/${S3Prefix}/VPC_Stack.json" },
+				"TemplateURL": { "Fn::Sub" : "https://s3.${AWS::Region}.amazonaws.com/${S3Bucket}/${BucketDPrefix}/VPC_Stack.json" },
 				"TimeoutInMinutes": "60"
 			}
 		},
@@ -39,7 +38,7 @@
 		"SGStack": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": { "Fn::Sub" : "https://s3.${AWS::Region}.amazonaws.com/${S3Bucket}/${S3Prefix}/SG_Stack.json" },
+				"TemplateURL": { "Fn::Sub" : "https://s3.${AWS::Region}.amazonaws.com/${S3Bucket}/${BucketDPrefix}/SG_Stack.json" },
 				"Parameters": {
 					"InputVPC": {
 						"Fn::GetAtt": ["VPCStack", "Outputs.OutputVPC"]

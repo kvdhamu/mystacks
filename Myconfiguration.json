@@ -1,7 +1,6 @@
 {
 	"Parameters": {
 		"SSHLocation": "0.0.0.0/0",
-		"S3Bucket": "damouseast1",
-		"S3Prefix": "nestedstacks"
+		"S3Bucket" : "damouseast1"
 	}
 }
