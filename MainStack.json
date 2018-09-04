@@ -1,0 +1,72 @@
+{
+
+	"Description": "MainStack",
+
+	"Parameters": {
+		"SSHLocation": {
+			"Description": " The IP address range that can be used to SSH to the EC2 instances",
+			"Type": "String",
+			"MinLength": "9",
+			"MaxLength": "18",
+			"Default": "0.0.0.0/0",
+			"AllowedPattern": "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})",
+			"ConstraintDescription": "must be a valid IP CIDR range of the form x.x.x.x/x."
+		},
+
+		"S3Bucket": {
+			"Description": " Name of your S3 bucket",
+			"Default": "damouseast1",
+			"Type": "String"
+		},
+		"S3Prefix": {
+			"Description": " Name of your S3 bucket",
+			"Default": "nestedstacks",
+			"Type": "String"
+		}
+
+	},
+
+	"Resources": {
+
+		"VPCStack": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": { "Fn::Sub" : "https://s3.${AWS::Region}.amazonaws.com/${S3Bucket}/${S3Prefix}/VPC_Stack.json" },
+				"TimeoutInMinutes": "60"
+			}
+		},
+
+		"SGStack": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": { "Fn::Sub" : "https://s3.${AWS::Region}.amazonaws.com/${S3Bucket}/${S3Prefix}/SG_Stack.json" },
+				"Parameters": {
+					"InputVPC": {
+						"Fn::GetAtt": ["VPCStack", "Outputs.OutputVPC"]
+					}
+				},
+				"TimeoutInMinutes": "60"
+			}
+		}
+
+	},
+
+	"Outputs": {
+		"StackRef": {
+			"Value": {
+				"Ref": "VPCStack"
+			}
+		},
+		"OutputFromVPCStack": {
+			"Value": {
+				"Fn::GetAtt": ["VPCStack", "Outputs.OutputVPC"]
+			}
+		},
+		"OutputFromSGStack": {
+			"Value": {
+				"Fn::GetAtt": ["SGStack", "Outputs.OutputSGName"]
+			}
+		}
+	}
+
+}

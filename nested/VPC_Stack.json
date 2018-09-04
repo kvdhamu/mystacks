@@ -1,0 +1,24 @@
+{
+
+  "Description" : "VPC stack",
+
+
+  "Resources" : {
+    "myVPC" : {
+         "Type" : "AWS::EC2::VPC",
+         "Properties" : {
+            "CidrBlock" : "10.0.0.0/16",
+    	    "EnableDnsSupport" : "true",
+    	    "EnableDnsHostnames" : "true",
+            "Tags" : [ {"Key" : "Name", "Value" : "mystackvpc"} ]
+         }
+      }
+  },
+"Outputs": {
+       "OutputVPC" : {
+    "Description": "VPC ID of VPC stack",  
+    "Value" : { "Ref" : "myVPC" }
+  }
+
+}
+}
