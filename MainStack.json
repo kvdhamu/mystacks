@@ -15,7 +15,6 @@
 
 		"S3Bucket": {
 			"Description": " Name of your S3 bucket",
-			"Default": "",
 			"Type": "String"
 		},
 		"BucketDPrefix": {

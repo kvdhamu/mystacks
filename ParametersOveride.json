@@ -1,3 +1,4 @@
 {
-  "BucketDPrefix" : { "Fn::GetParam" : ["OutputArtifact", "build.json", "epoctime"] }
+  "BucketDPrefix" : { "Fn::GetParam" : ["OutputCBArtifact", "build.json", "epoctime"] },
+  "S3Bucket" : { "Fn::GetParam" : ["OutputCBArtifact", "build.json", "DBucket"] }
   }

@@ -17,9 +17,12 @@ phases:
       - echo Entered the build phase...
       - DT=`date +%Y-%m-%d-%S`
       - echo $DT
-      - printf '{"epoctime":"%s"}' $DT > ../build.json
+      - echo $DBucketenv
+      - printf '{"epoctime":"%s"},' $DT > ../build.json
+      - printf '{"DBucket":"%s"}' $DBucketenv >> ../build.json
+      - cat ../build.json
       - ls -ltr
-      - aws s3 cp --recursive ./nested s3://${}/$(DT)/
+      - aws s3 cp --recursive ./nested s3://$DBucketenv/$DT/
     finally:
       - echo This always runs even if build command fails
   post_build:
