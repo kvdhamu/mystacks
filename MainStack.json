@@ -17,8 +17,20 @@
 			"Description": " Name of your S3 bucket",
 			"Type": "String"
 		},
+		"ArtifactBucketName": {
+			"Description": " Name of your S3 bucket",
+			"Type": "String"
+		},
+		"ArtifactObjectKey": {
+			"Description": " No need input, Just used for outputs",
+			"Type": "String"
+		},
+		"ArtifactURL": {
+			"Description": "No need input, Just used for outputs",
+			"Type": "String"
+		},
 		"BucketDPrefix": {
-			"Description": " Name of your S3 bucket prefix",
+			"Description": "No need input, Just used for outputs",
 			"Type": "String"
 		}
 
@@ -29,7 +41,9 @@
 		"VPCStack": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": { "Fn::Sub" : "https://s3.${AWS::Region}.amazonaws.com/${S3Bucket}/${BucketDPrefix}/VPC_Stack.json" },
+				"TemplateURL": {
+					"Fn::Sub": "https://s3.${AWS::Region}.amazonaws.com/${S3Bucket}/${BucketDPrefix}/VPC_Stack.json"
+				},
 				"TimeoutInMinutes": "60"
 			}
 		},
@@ -37,7 +51,9 @@
 		"SGStack": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": { "Fn::Sub" : "https://s3.${AWS::Region}.amazonaws.com/${S3Bucket}/${BucketDPrefix}/SG_Stack.json" },
+				"TemplateURL": {
+					"Fn::Sub": "https://s3.${AWS::Region}.amazonaws.com/${S3Bucket}/${BucketDPrefix}/SG_Stack.json"
+				},
 				"Parameters": {
 					"InputVPC": {
 						"Fn::GetAtt": ["VPCStack", "Outputs.OutputVPC"]
@@ -63,6 +79,26 @@
 		"OutputFromSGStack": {
 			"Value": {
 				"Fn::GetAtt": ["SGStack", "Outputs.OutputSGName"]
+			}
+		},
+		"OutputBucketDPrefix": {
+			"Value": {
+				"Ref": "BucketDPrefix"
+			}
+		},
+		"OutputArtifactBucketName": {
+			"Value": {
+				"Ref": "ArtifactBucketName"
+			}
+		},
+		"OutputArtifactObjectKey": {
+			"Value": {
+				"Ref": "ArtifactObjectKey"
+			}
+		},
+		"OutputArtifactURL": {
+			"Value": {
+				"Ref": "ArtifactURL"
 			}
 		}
 	}
