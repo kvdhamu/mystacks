@@ -23,10 +23,8 @@ phases:
       - cat build.json
       - ls -ltr
       - aws s3 cp --recursive ./nested s3://$DBucketenv/$DT/
-      - set +e
-      - StackStatus=`aws cloudformation describe-stacks --stack-name $StackName --query Stacks[].StackStatus --output text`
+      - export StackStatus=`aws cloudformation describe-stacks --stack-name $StackName --query Stacks[].StackStatus --output text` || true
       - echo $StackStatus
-      - set -e
       - if [ $StackStatus = 'ROLLBACK_COMPLETE' ]; then echo "This stack previous status was in ROLLBACK_COMPLETE state, so cleaning up this stack"; aws cloudformation delete-stack --stack-name $StackName; else echo "Continue for next stage"; fi
     finally:
       - echo This always runs even if build command fails
