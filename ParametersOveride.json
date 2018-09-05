@@ -6,12 +6,12 @@
 		"Fn::GetParam": ["OutputCBArtifact", "build.json", "DBucket"]
 	},
 	"ArtifactBucketName": {
-		"Fn::GetArtifactAtt": ["OutputSourceArtifact", "BucketName"]
+		"Fn::GetArtifactAtt": ["Source", "BucketName"]
 	},
 	"ArtifactObjectKey": {
-		"Fn::GetArtifactAtt": ["OutputSourceArtifact", "ObjectKey"]
+		"Fn::GetArtifactAtt": ["Source", "ObjectKey"]
 	},
 	"ArtifactURL": {
-		"Fn::GetArtifactAtt": ["OutputSourceArtifact", "URL"]
+		"Fn::GetArtifactAtt": ["Source", "URL"]
 	}
 }
